@@ -56,6 +56,14 @@ const bookSchema = new mongoose.Schema({
 // it allows you to perform CRUD (Create, Read, Update, Delete) operations on the documents in the "books" collection through the Mongoose API
 const bookModel = mongoose.model('books', bookSchema);
 
+app.delete('/api/book/:id', async (req, res) => {
+    console.log("Delete: " + req.params.id);
+    // find book by ID and execute delete function
+    let book = await bookModel.findByIdAndDelete(req.params.id);
+    // send back a response
+    res.send(book);
+})
+
 // post method to parase the body of this post request
 // listening at port 4000 and sends back a book message
 app.post('/api/book', (req, res) => {

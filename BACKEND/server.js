@@ -114,15 +114,21 @@ app.get('/hello/:name', (req, res) => {
 })
 
 // connect to mongodb
+// an asynchronous callback function that will be executed when a GET request is made to '/api/books'
+// it takes two parameters: req (request) and res (response)
 app.get('/api/books', async (req, res) => {
     let books = await bookModel.find({});
     console.log(books);
     res.json(books);
 })
-
+// the :id in the path indicates a route parameter
+// this parameter is accessible through req.params.id in the callback function
 app.get('/api/book/:id', async (req, res) => {
     console.log(req.params.id);
     let book = await bookModel.findById({ _id: req.params.id })
+    // sends the retrieved book as the response to the client
+    // res.send() method automatically sets the appropriate Content-Type header based on the data type of the response
+    // If the book is an object, it will be sent as JSON
     res.send(book);
 })
 
@@ -132,8 +138,10 @@ app.put('/api/book/:id', async (req, res) => {
     let book = await bookModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.send(book);
 })
-
+// sets up a route handler for HTTP GET requests to the path '/test'
+// app.get is used to define routes for handling GET requests
 app.get('/test', (req, res) => {
+    // sends the file located at the specified path to the client in response to the GET request
     res.sendFile(path.join(__dirname + '/index.html'));
 })
 

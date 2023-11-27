@@ -31,20 +31,34 @@ export default function Edit(props) {
                 console.log(error);
             })
     }, []);
+    // handleSubmit handles form submissions
     const handleSubmit = (event) => {
+        // prevents the default behavior of the form submission
+        // in a web form, when a user submits the form, the page typically gets refreshed
+        // preventDefault() method ensures that the page doesn't refresh
+        // allows you to handle the form submission using custom logic
         event.preventDefault();
+        // create a javascript object called newBook
         const newBook = {
             id: id,
             title: title,
             cover: cover,
             author: author
         };
+        // sends a PUT request to the specified URL with ID URL path
+        // newBook object is sent as the data payload in the request
         axios.put('http://localhost:4000/api/book/' + id, newBook)
+            // (res) is a promise chain. 
+            // specifies that once the PUT request is successfully completed
+            // the function inside the then block will be executed
             .then((res) => {
                 console.log(res.data);
                 navigate('/read');
             });
     }
+    // returns a form for submission when 
+    // navigate function redirects the user to the '/read' route after the 
+    // PUT request is successful
     return (
         <div>
             <form onSubmit={handleSubmit}>

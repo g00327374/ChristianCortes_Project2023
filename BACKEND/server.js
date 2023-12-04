@@ -60,9 +60,16 @@ const bookSchema = new mongoose.Schema({
 const bookModel = mongoose.model('books', bookSchema);
 
 // serve the static files from the React app
+// changing from localhost:3000 to 4000 which now returns a single page reaction instead
+// express.static takes a directory path as an argument and serves the static files in that directory
 app.use(express.static(path.join(__dirname, '../build')));
+// path.join constructs an absolute path to the build directory
+// app.use is amethod used to mount middleware functions in the application's reqiest
+// middleware functions are functions that have access to the request object (req),
+// the response object (res), and the next function
 app.use('/static', express.static(path.join(__dirname, 'build//static')));
 
+// my delete function
 app.delete('/api/book/:id', async (req, res) => {
     console.log("Delete: " + req.params.id);
     // find book by ID and execute delete function
@@ -165,8 +172,9 @@ app.get('/test', (req, res) => {
     res.sendFile(path.join(__dirname + '/index.html'));
 })
 
+// this is an express.js route handler for get request
 // add at the bottom just over app.listen
-// Handles any requests that don't match the ones above
+// handles any requests ('*') that don't match the ones above
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/../build/index.html'));
 });

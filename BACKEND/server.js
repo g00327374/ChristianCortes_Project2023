@@ -5,23 +5,23 @@ const express = require('express')
 const app = express()
 const port = 4000
 const path = require('path');
-const cors = require('cors');
+//const cors = require('cors');
 // incoming HTTP requests and extracts data from it
 // it is essential when handling data submitted through 
 // forms or when receiving data from API requests
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 
 // this code snippet is configuring CORS (Cross-Origin Resource Sharing) for an Express.js application
 // CORS is a security feature implemented by web browsers to restrict web pages from making requests to a different domain than the one that served the web page
 // tt is enforced by the browser, and without proper configuration, requests from a different origin may be blocked
-app.use(cors());
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+// app.use(cors());
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*");
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//     res.header("Access-Control-Allow-Headers",
+//         "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 
 // confugires the body-parser to handle URL form data from
 // incoming HTTP requests
@@ -62,7 +62,6 @@ const bookModel = mongoose.model('books', bookSchema);
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, '../build')));
 app.use('/static', express.static(path.join(__dirname, 'build//static')));
-
 
 app.delete('/api/book/:id', async (req, res) => {
     console.log("Delete: " + req.params.id);

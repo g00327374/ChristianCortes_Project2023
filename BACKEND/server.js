@@ -59,7 +59,7 @@ const bookSchema = new mongoose.Schema({
 // it allows you to perform CRUD (Create, Read, Update, Delete) operations on the documents in the "books" collection through the Mongoose API
 const bookModel = mongoose.model('books', bookSchema);
 
-// Serve the static files from the React app
+// serve the static files from the React app
 app.use(express.static(path.join(__dirname, '../build')));
 app.use('/static', express.static(path.join(__dirname, 'build//static')));
 

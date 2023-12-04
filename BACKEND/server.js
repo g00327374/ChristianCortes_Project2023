@@ -32,6 +32,9 @@ app.use(bodyParser.json());
 // connect to the mongo db
 const mongoose = require('mongoose');
 
+// involves the use of promises and asynchronous programming
+// function call to a function named main
+// catch method is used to handle errors during the execution of the asynchronous operation
 main().catch(err => console.log(err));
 
 // the async funtion is used to define an asynchronous function 
@@ -55,6 +58,11 @@ const bookSchema = new mongoose.Schema({
 // this model can be used to interact with the MongoDB collection "books" using the defined schema.
 // it allows you to perform CRUD (Create, Read, Update, Delete) operations on the documents in the "books" collection through the Mongoose API
 const bookModel = mongoose.model('books', bookSchema);
+
+// Serve the static files from the React app
+app.use(express.static(path.join(__dirname, '../build')));
+app.use('/static', express.static(path.join(__dirname, 'build//static')));
+
 
 app.delete('/api/book/:id', async (req, res) => {
     console.log("Delete: " + req.params.id);
@@ -157,6 +165,12 @@ app.get('/test', (req, res) => {
     // sends the file located at the specified path to the client in response to the GET request
     res.sendFile(path.join(__dirname + '/index.html'));
 })
+
+//add at the bottom just over app.listen
+// Handles any requests that don't match the ones above
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname + '/../build/index.html'));
+});
 
 // listen to a particular http request at a particular port
 app.listen(port, () => {

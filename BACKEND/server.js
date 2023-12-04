@@ -141,8 +141,13 @@ app.get('/api/book/:id', async (req, res) => {
 })
 
 // listen to http request from client
+// :id in the path is a route parameter
+// allows the route to match any value at that position in the URL
 app.put('/api/book/:id', async (req, res) => {
+    // extracts the value of the id parameter from the request URL 
     console.log("Edit: " + req.params.id);
+    // the findByIdAndUpdate method from Mongoose finds a document in the MongoDB database with the specified id 
+    // and update it with the data from req.body
     let book = await bookModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.send(book);
 })

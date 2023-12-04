@@ -20,8 +20,11 @@ function BookItem(props) {
                 </Card.Body>
                 <Link to={'/edit/' + props.myBook._id} className="btn btn-primary">Edit</Link>
                 <Button onClick={(e) => {
+                    // this prevents the form from being submitted
                     e.preventDefault();
+                    // uses the Axios library to send an HTTP DELETE request to the specified URL ('http://localhost:4000/api/book/' + props.myBook._id)
                     axios.delete('http://localhost:4000/api/book/' + props.myBook._id)
+                        // If the DELETE request is successful, the .then block is executed
                         .then(()=>{
                             props.reload();
                         })

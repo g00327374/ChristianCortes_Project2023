@@ -25,22 +25,30 @@ function Read() {
 
         }, []
     );
-
+    // when invoked, sends an HTTP GET request to 'http://localhost:4000/api/books' using the Axios library
     const ReloadData = (e) => {
+        // uses Axios to make an HTTP GET request to the specified URL ('http://localhost:4000/api/books')
+        // to return a list of books
         axios.get('http://localhost:4000/api/books')
+            // extracts the data from it using response.data, and then calls a function named setData with the retrieved data
             .then(
                 (response) => {
                     setData(response.data)
                 }
             )
+            // if there's an error during the GET request, the .catch block is executed
+            // it logs the error to the console using console.log.
             .catch(
                 (error) => {
                     console.log(error);
                 }
             )
     }
-
+    // React component called Books
     return (
+        // holds an array of book objects
+        // Reload={ReloadData}: passes the ReloadData function as a prop named Reload
+        // allows the Books component to trigger a reload of data 
         <div>
             <h2>Hello from Read Component!</h2>
             <Books myBooks={data} Reload={ReloadData}></Books>

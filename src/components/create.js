@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function Create() {
-
+    // useState('') is declaring a state variable using the useState hook
     const [title, setTitle] = useState('');
     const [cover, setCover] = useState('');
     const [author, setAuthor] = useState('');

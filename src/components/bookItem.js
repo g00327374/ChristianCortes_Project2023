@@ -7,6 +7,11 @@ import axios from 'axios';
 function BookItem(props) {
 
     return (
+        // renders the title of the book within a Card.Header component 
+        // uses the props.myBook.title to access the title of the book passed as a prop to this component
+        // <img src={props.myBook.cover}></img>: renders an image tag with the source (src) attribute set to props.myBook.cover
+        // cover is a property of the myBook object containing the URL of the book cover image
+        // create a link to the '/edit/:id' route, where :id is replaced with the _id of the current book
         <div>
             <Card>
                 <Card.Header>{props.myBook.title}</Card.Header>

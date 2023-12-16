@@ -44,13 +44,14 @@ function Read() {
                 }
             )
     }
+    // Display Heading of Read Component Page
     // React component called Books
     return (
         // holds an array of book objects
         // Reload={ReloadData}: passes the ReloadData function as a prop named Reload
         // allows the Books component to trigger a reload of data 
         <div>
-            <h2>Hello from Read Component!</h2>
+            <h2>Welcome To The Games Library</h2>
             <Books myBooks={data} Reload={ReloadData}></Books>
         </div>
     );

@@ -5,23 +5,23 @@ const express = require('express')
 const app = express()
 const port = 4000
 const path = require('path');
-//const cors = require('cors');
+const cors = require('cors');
 // incoming HTTP requests and extracts data from it
 // it is essential when handling data submitted through 
 // forms or when receiving data from API requests
-//const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 // this code snippet is configuring CORS (Cross-Origin Resource Sharing) for an Express.js application
 // CORS is a security feature implemented by web browsers to restrict web pages from making requests to a different domain than the one that served the web page
 // tt is enforced by the browser, and without proper configuration, requests from a different origin may be blocked
-// app.use(cors());
-// app.use(function (req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-//     res.header("Access-Control-Allow-Headers",
-//         "Origin, X-Requested-With, Content-Type, Accept");
-//     next();
-// });
+app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // confugires the body-parser to handle URL form data from
 // incoming HTTP requests
@@ -62,12 +62,12 @@ const bookModel = mongoose.model('books', bookSchema);
 // serve the static files from the React app
 // changing from localhost:3000 to 4000 which now returns a single page reaction instead
 // express.static takes a directory path as an argument and serves the static files in that directory
-app.use(express.static(path.join(__dirname, '../build')));
+// app.use(express.static(path.join(__dirname, '../build')));
 // path.join constructs an absolute path to the build directory
 // app.use is amethod used to mount middleware functions in the application's reqiest
 // middleware functions are functions that have access to the request object (req),
 // the response object (res), and the next function
-app.use('/static', express.static(path.join(__dirname, 'build//static')));
+// app.use('/static', express.static(path.join(__dirname, 'build//static')));
 
 // my delete function
 app.delete('/api/book/:id', async (req, res) => {
@@ -175,9 +175,9 @@ app.get('/test', (req, res) => {
 // this is an express.js route handler for get request
 // add at the bottom just over app.listen
 // handles any requests ('*') that don't match the ones above
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/../build/index.html'));
-});
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname + '/../build/index.html'));
+// });
 
 // listen to a particular http request at a particular port
 app.listen(port, () => {

@@ -2,39 +2,42 @@ import { useState } from "react";
 import axios from "axios";
 
 function Create() {
-    // useState('') is declaring a state variable using the useState hook
     const [title, setTitle] = useState('');
     const [cover, setCover] = useState('');
-    const [author, setAuthor] = useState('');
+    const [developer, setDeveloper] = useState('');
+    const [message, setMessage] = useState('');
 
-    // e.preventDefault();: This line prevents the default behavior of the event. In the context of a form submission, this prevents the default form submission behavior
-    // when a form is submitted, the browser typically reloads the page or performs a full-page refresh
-    // by calling e.preventDefault(), you're stopping this default behavior, allowing you to handle the form submission manually using custom logic
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log("Title: " + title +
-            " Cover: " + cover +
-            " Author: " + author);
-        const book = {
+        const game = {
             title: title,
             cover: cover,
-            author: author
+            developer: developer
         };
 
-        // this request uses an object after the request URL to define
-        // the properties you want to create for your user
-        axios.post('http://localhost:4000/api/book', book)
-            .then()
-            .catch();
+        axios.post('http://localhost:4000/api/game', game)
+            .then(() => {
+                setMessage('Game added successfully!');
+                // Clear input fields after successful submission
+                setTitle('');
+                setCover('');
+                setDeveloper('');
+            })
+            .catch((error) => {
+                console.log(error);
+                setMessage('Error adding game.');
+            });
     }
 
     return (
         <div>
-            <h2>Hello from create Component!</h2>
+            <br></br>
+            <h2>This is the Games Creation Component</h2>
+            <br></br>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Add Book Title: </label>
+                    <label>Add Game Title: </label>
                     <input type="text"
                         className="form-control"
                         value={title}
@@ -42,7 +45,7 @@ function Create() {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Add Book Cover: </label>
+                    <label>Add Game Cover: </label>
                     <input type="text"
                         className="form-control"
                         value={cover}
@@ -50,21 +53,20 @@ function Create() {
                     />
                 </div>
                 <div className="form-group">
-                    <label>Add Book Author: </label>
+                    <label>Add Game Developer: </label>
                     <input type="text"
                         className="form-control"
-                        value={author}
-                        onChange={(e) => { setAuthor(e.target.value) }}
+                        value={developer}
+                        onChange={(e) => { setDeveloper(e.target.value) }}
                     />
                 </div>
                 <div>
-                    <input type="submit"
-                        value="Add Book">
-                    </input>
+                    <input type="submit" value="Add Game" />
                 </div>
             </form>
+            {message && <p>{message}</p>}
         </div>
     );
-
 }
+
 export default Create;

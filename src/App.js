@@ -17,11 +17,11 @@ function App() {
     <div className="App">
        <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="/">Navbar</Navbar.Brand>
+          <Navbar.Brand href="/">GamesLibrary</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/create">Create</Nav.Link>
-            <Nav.Link href="/read">Read</Nav.Link>
+            <Nav.Link href="/read">Library</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

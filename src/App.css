@@ -36,3 +36,11 @@
     transform: rotate(360deg);
   }
 }
+
+.game-item-container {
+  display: flex !important;
+  justify-content: space-evenly !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+}
+

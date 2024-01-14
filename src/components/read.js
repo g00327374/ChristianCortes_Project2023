@@ -1,3 +1,4 @@
+// read.js
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Games from "./games";
@@ -28,7 +29,7 @@ function Read() {
     return (
         <div>
             <br></br>
-            <h2>Welcome To The Games Library</h2>
+            <h2>Welcome To The Games Library and Poll</h2>
             <br></br>
             <Games myGames={data} Reload={reloadData}></Games>
             

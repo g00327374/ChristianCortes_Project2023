@@ -1,12 +1,26 @@
 // GameItem.js
-import React from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function GameItem(props) {
-    
+    const [voted, setVoted] = useState(false);
+
+    const handleVote = () => {
+        if (!voted) {
+            axios.post(`http://localhost:4000/api/game/vote/${props.myGame._id}`)
+                .then(() => {
+                    setVoted(true);
+                    props.reload();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        }
+    };
+
     return (
         <div className="game-item-card" style={{ width: '250px', margin: '40px' }}>
             <Card>
@@ -32,8 +46,8 @@ function GameItem(props) {
                     variant='danger'>
                     Delete
                 </Button>
-                <Button variant="info">
-                    Vote As Top 5 Games
+                <Button variant="info" onClick={handleVote} disabled={voted}>
+                    {voted ? 'Voted!' : 'Vote As Top 5 Games'}
                 </Button>
 
             </Card>

@@ -18,35 +18,36 @@ app.use(function (req, res, next) { // sets specific CORS headers for every inco
     next(); // allows the request to continue processing
 });
 
-// used to parse the body of incoming HTTP requests, making the data available in the req.body object
+// Used to parse the body of incoming HTTP requests, making the data available in the req.body object
 // configures the middleware to parse URL-encoded data
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json()); //  parse JSON-encoded data
 
-// imports the Mongoose library, which is an Object Data Modeling (ODM) library for MongoDB and Node.js.
+// Imports the Mongoose library, which is an Object Data Modeling (ODM) library for MongoDB and Node.js.
 // Mongoose provides a higher-level abstraction for working with MongoDB, allowing the use of schemas, models, and other features
 const mongoose = require('mongoose');
 
 main().catch(err => console.log(err));
 
-// initiate the connection to the MongoDB database using the mongoose.connect() method
-// The main function is declared as an asynchronous function to allow the use of await inside it. 
-// The await keyword is used to wait for the completion of the mongoose.connect() method before proceeding
+// Initiate the connection to the MongoDB database using the mongoose.connect() method
+// the main function is declared as an asynchronous function to allow the use of await inside it
+// the await keyword is used to wait for the completion of the mongoose.connect() method before proceeding
 async function main() {
     // contains the username, password, cluster address, and other parameters required to establish a connection to the MongoDB database
     await mongoose.connect('mongodb+srv://admin:admin@g00327374.onfefpl.mongodb.net/?retryWrites=true&w=majority');
 }
 
-// defines a Mongoose schema for a "game" document in a MongoDB database
+// Defines a Mongoose schema for a "game" document in a MongoDB database
 const gameSchema = new mongoose.Schema({ // creates a new instance of the Mongoose Schema class, representing the schema for the "game" documents
     title: String,
     cover: String,
     developer: String,
+    price: Number,
     votes: { type: Number, default: 0 } // field for votes
 });
 
-// used to compile a Mongoose schema into a model. A Mongoose model is a constructor function that has methods for querying and interacting with a MongoDB collection
-// The first argument to mongoose.model is the name of the collection in the MongoDB database that this model is associated with specified as 'games'
+// Used to compile a Mongoose schema into a model. A Mongoose model is a constructor function that has methods for querying and interacting with a MongoDB collection
+// the first argument to mongoose.model is the name of the collection in the MongoDB database that this model is associated with specified as 'games'
 const gameModel = mongoose.model('games', gameSchema);
 
 app.delete('/api/game/:id', async (req, res) => {
@@ -56,7 +57,31 @@ app.delete('/api/game/:id', async (req, res) => {
     res.send(game);
 });
 
-// defines a route in Express.js backend for handling the voting of games
+// post method to parse the body of this post request
+app.post('/api/game', async (req, res) => {
+    console.log(req.body);
+
+    // create a document for gameModel
+    gameModel.create({
+        title: req.body.title,
+        cover: req.body.cover,
+        developer: req.body.developer,
+        price: req.body.price 
+    })
+    .then(
+        () => {
+            res.send("Game Data Received!");
+        }
+    )
+    .catch(
+        (error) => {
+            console.error(error);
+            res.send("Error: Game Data NOT received!");
+        }
+    );
+});
+
+// Defines a route in Express.js backend for handling the voting of games
 app.post('/api/game/vote/:id', async (req, res) => {
     // uses Mongoose to find a game in the MongoDB database based on the provided id
     const game = await gameModel.findById(req.params.id);
@@ -72,7 +97,7 @@ app.post('/api/game/vote/:id', async (req, res) => {
     res.send(game);
 });
 
-// retrive top 5 games
+// Retrive top 5 games
 app.get('/api/games/top5', async (req, res) => { //  listens for requests to the /api/games/top5 endpoint
     // retrieves all documents in the collection
     // sorts the results in descending order based on the votes field
@@ -116,9 +141,12 @@ app.get('/api/game/:id', async (req, res) => {
     res.send(game);
 });
 
-app.put('/api/game/:id', async (req, res) => {
+// Defines a route in an Express.js application that handles the update (editing) of a game in a MongoDB database
+// sets up a route that listens for HTTP PUT requests at the endpoint /api/game/:id
+app.put('/api/game/:id', async (req, res) => { // an asynchronous arrow function that handles the incoming PUT request
     console.log("Edit: " + req.params.id);
-    let game = await gameModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    // method to find a game in the MongoDB database with the provided ID (req.params.id) and update its properties based on the data in req.body
+    let game = await gameModel.findByIdAndUpdate(req.params.id, req.body, { new: true }); // ensures that the method returns the modified document rather than the original one
     res.send(game);
 });
 
@@ -126,6 +154,7 @@ app.get('/test', (req, res) => {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+// This method is used to bind and listen for connections on the specified port
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

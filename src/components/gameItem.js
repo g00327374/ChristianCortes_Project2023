@@ -6,13 +6,21 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function GameItem(props) {
+    // This line initializes a state variable voted using the useState hook, it is set to false initially
+    // The setVoted function is the updater function for the voted state variable
     const [voted, setVoted] = useState(false);
 
     const handleVote = () => {
+        // This checks if the user has not already voted (when voted is false)
+        // If the user hasn't voted, it proceeds with the voting logic
         if (!voted) {
-            axios.post(`http://localhost:4000/api/game/vote/${props.myGame._id}`)
+            // :id is replaced with the ID of the specific game (props.myGame._id)
+            axios.post(`http://localhost:4000/api/game/vote/${props.myGame._id}`) // This line makes a POST request to the server endpoint
+            // If the POST request is successful, the code inside the then block is executed
                 .then(() => {
+                    // updates the state, indicating that the user has voted
                     setVoted(true);
+                    // calls a function (reload) passed as a prop to the component, triggers a reload or update of the game list
                     props.reload();
                 })
                 .catch((error) => {

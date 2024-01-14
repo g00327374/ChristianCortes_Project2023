@@ -59,9 +59,9 @@ app.delete('/api/game/:id', async (req, res) => {
 
 // post method to parse the body of this post request
 app.post('/api/game', async (req, res) => {
+    console.log('Received POST request to /api/game');
     console.log(req.body);
 
-    // create a document for gameModel
     gameModel.create({
         title: req.body.title,
         cover: req.body.cover,
@@ -70,12 +70,14 @@ app.post('/api/game', async (req, res) => {
     })
     .then(
         () => {
+            console.log('Game Data Received!');
             res.send("Game Data Received!");
         }
     )
     .catch(
         (error) => {
             console.error(error);
+            console.log('Error: Game Data NOT received!');
             res.send("Error: Game Data NOT received!");
         }
     );

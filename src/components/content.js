@@ -13,6 +13,7 @@ function Content() {
         // Axios GET request fetches data from the specified API endpoint 
         axios.get('http://localhost:4000/api/games/top5')
             .then((response) => {
+                // this gets the top 5 games content from the database
                 setTopGames(response.data);
             })
             .catch((error) => {
@@ -26,13 +27,24 @@ function Content() {
             .catch((error) => {
                 console.log(error);
             });
+
+        axios.get('http://localhost:4000/api/games/top5/cheapest')
+            .then((response) => {
+                console.log("Top 5 Cheapest Games Data:", response.data);
+                setTopCheapestGames(response.data);
+            })
+            .catch((error) => {
+                console.log("Error fetching top 5 cheapest games:", error);
+            });
     }, []);
 
     // Displays 3 containers, each showing different materials: Greeting, time, and the vote poll
     return (
         <div>
             <div className="row-container">
+                <br></br>
                 <h1>Welcome to the Home Page</h1>
+                <h2>This week's latest update</h2>
             </div><br></br>
             <div className="row-container">
                 <h2>It is {new Date().toLocaleTimeString()}.</h2>

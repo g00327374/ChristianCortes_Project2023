@@ -99,7 +99,7 @@ app.post('/api/game/vote/:id', async (req, res) => {
     res.send(game);
 });
 
-// Retrive top 5 games
+// Retrieve top 5 games
 app.get('/api/games/top5', async (req, res) => { //  listens for requests to the /api/games/top5 endpoint
     // retrieves all documents in the collection
     // sorts the results in descending order based on the votes field
@@ -107,6 +107,19 @@ app.get('/api/games/top5', async (req, res) => { //  listens for requests to the
     const topGames = await gameModel.find({}).sort({ votes: -1 }).limit(5);
     // sends a JSON response containing an array of the top 5 voted games
     res.json(topGames);
+});
+
+// Retrieve top 5 cheapest games
+app.get('/api/games/top5/cheapest', async (req, res) => {
+    try {
+        // Retrieves the top 5 cheapest games from the database
+        const topCheapestGames = await gameModel.find({}).sort({ price: 1 }).limit(5);
+        // Sends a JSON response containing an array of the top 5 cheapest games
+        res.json(topCheapestGames);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 app.get('/name', (req, res) => {

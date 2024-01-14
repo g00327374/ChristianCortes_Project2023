@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const app = express();
 const port = 4000;
@@ -28,7 +29,8 @@ async function main() {
 const gameSchema = new mongoose.Schema({
     title: String,
     cover: String,
-    developer: String
+    developer: String,
+    votes: { type: Number, default: 0 } // field for votes
 });
 
 const gameModel = mongoose.model('games', gameSchema);
@@ -39,24 +41,22 @@ app.delete('/api/game/:id', async (req, res) => {
     res.send(game);
 });
 
-app.post('/api/game', (req, res) => {
-    console.log(req.body);
+app.post('/api/game/vote/:id', async (req, res) => {
+    const game = await gameModel.findById(req.params.id);
 
-    gameModel.create({
-        title: req.body.title,
-        cover: req.body.cover,
-        developer: req.body.developer
-    })
-        .then(
-            () => {
-                res.send("Data Received!");
-            }
-        )
-        .catch(
-            () => {
-                res.send("Data NOT received!");
-            }
-        );
+    if (!game) {
+        return res.status(404).send("Game not found");
+    }
+
+    game.votes += 1;
+    await game.save();
+
+    res.send(game);
+});
+
+app.get('/api/games/top5', async (req, res) => {
+    const topGames = await gameModel.find({}).sort({ votes: -1 }).limit(5);
+    res.json(topGames);
 });
 
 app.get('/name', (req, res) => {

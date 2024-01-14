@@ -16,7 +16,7 @@ function GameItem(props) {
         if (!voted) {
             // :id is replaced with the ID of the specific game (props.myGame._id)
             axios.post(`http://localhost:4000/api/game/vote/${props.myGame._id}`) // This line makes a POST request to the server endpoint
-            // If the POST request is successful, the code inside the then block is executed
+                // If the POST request is successful, the code inside the then block is executed
                 .then(() => {
                     // updates the state, indicating that the user has voted
                     setVoted(true);
@@ -32,12 +32,13 @@ function GameItem(props) {
     return (
         <div className="game-item-card" style={{ width: '250px', margin: '40px' }}>
             <Card>
-                <Card.Header>{props.myGame.title}</Card.Header>
+                <Card.Header><p>NAME: {props.myGame.title}</p></Card.Header>
                 <Card.Body>
                     <blockquote className="blockquote mb-0">
                         <img src={props.myGame.cover} alt={props.myGame.title} style={{ width: '100%' }} />
                         <footer>
-                            {props.myGame.developer}
+                            <p>Developer: {props.myGame.developer}</p>
+                            <p>Price: ${props.myGame.price}</p> {/* Add this line to display the price */}
                         </footer>
                     </blockquote>
                 </Card.Body>

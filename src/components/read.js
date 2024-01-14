@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Games from "./games";
 
+// This component will be the web page that contains all information about each games
+// created and stored from MongoDB
 function Read() {
     const [data, setData] = useState([]);
 
@@ -26,6 +28,7 @@ function Read() {
             });
     };
 
+    // Title
     return (
         <div>
             <br></br>

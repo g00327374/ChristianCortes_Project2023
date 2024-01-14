@@ -57,7 +57,7 @@ app.delete('/api/game/:id', async (req, res) => {
     res.send(game);
 });
 
-// post method to parse the body of this post request
+// Post method to parse the body of this post request
 app.post('/api/game', async (req, res) => {
     console.log('Received POST request to /api/game');
     console.log(req.body);

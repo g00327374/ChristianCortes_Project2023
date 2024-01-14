@@ -40,6 +40,7 @@ function Create() {
             });
     }
 
+    // This is what we will visually see on the creation page
     return (
         <div>
             <br></br>

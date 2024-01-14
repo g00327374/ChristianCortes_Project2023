@@ -3,8 +3,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+// The useNavigate hook is part of the react-router-dom library and is used for programmatic navigation in React applications
+// It provides a navigate function that to navigate to a different route
 import { useNavigate } from 'react-router-dom';
 
+// This is my edits page when user clicks the edit button they will be transferred to this page
+// the function calls the object's id which allows them to spefically edit that game
 export default function Edit(props) {
     let { id } = useParams();
     const [title, setTitle] = useState('');
@@ -13,6 +17,7 @@ export default function Edit(props) {
     const navigate = useNavigate();
 
     useEffect(() => {
+        // making a GET request to a specific API endpoint using the Axios library in a React or JavaScript application
         axios.get('http://localhost:4000/api/game/' + id)
             .then((response) => {
                 setTitle(response.data.title);
@@ -36,6 +41,7 @@ export default function Edit(props) {
         axios.put('http://localhost:4000/api/game/' + id, newGame)
             .then((res) => {
                 console.log(res.data);
+                // call navigate('/games'), it instructs the router to navigate to the /games route, to render corrensponding component
                 navigate('/games');
             });
     }

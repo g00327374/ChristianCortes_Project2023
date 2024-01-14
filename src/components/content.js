@@ -19,7 +19,7 @@ function Content() {
             .catch((error) => {
                 console.log(error);
             });
-
+        // Fetch top 5 cheapest games
         axios.get('http://localhost:4000/api/games/top5/cheapest')
             .then((response) => {
                 setTopCheapestGames(response.data);
@@ -27,7 +27,8 @@ function Content() {
             .catch((error) => {
                 console.log(error);
             });
-
+        
+        // This is to check if the data is successfully retrieved
         axios.get('http://localhost:4000/api/games/top5/cheapest')
             .then((response) => {
                 console.log("Top 5 Cheapest Games Data:", response.data);

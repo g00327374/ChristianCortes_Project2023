@@ -29,6 +29,7 @@ function GameItem(props) {
         }
     };
 
+    // My card containers and including what to be displayed in Library Page on the webpage
     return (
         <div className="game-item-card" style={{ width: '250px', margin: '40px' }}>
             <Card>
@@ -38,7 +39,7 @@ function GameItem(props) {
                         <img src={props.myGame.cover} alt={props.myGame.title} style={{ width: '100%' }} />
                         <footer>
                             <p>Developer: {props.myGame.developer}</p>
-                            <p>Price: ${props.myGame.price}</p> {/* Add this line to display the price */}
+                            <p>Price: ${props.myGame.price}</p>
                         </footer>
                     </blockquote>
                 </Card.Body>

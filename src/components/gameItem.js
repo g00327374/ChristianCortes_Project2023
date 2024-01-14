@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function GameItem(props) {
+    
     return (
         <div className="game-item-card" style={{ width: '250px', margin: '40px' }}>
             <Card>
@@ -28,10 +29,13 @@ function GameItem(props) {
                             })
                             .catch();
                     }}
-                    variant='danger'
-                >
+                    variant='danger'>
                     Delete
                 </Button>
+                <Button variant="info">
+                    Vote As Top 5 Games
+                </Button>
+
             </Card>
         </div>
     );
